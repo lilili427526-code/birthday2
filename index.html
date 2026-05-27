@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>生日惊喜 🎁</title>
+    <title>Birthday Surprise 🎁</title>
     <style>
         * {
             margin: 0;
@@ -33,7 +33,6 @@
             width: 100%;
             height: 100vh;
             height: 100dvh;
-            /* fallback */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -144,9 +143,8 @@
             letter-spacing: 6px;
         }
 
-        /* ===== 关键修改：page5 全屏背景 ===== */
+        /* ===== 全屏背景 ===== */
         #page5 {
-            /* 不再依赖父级 .page 的尺寸，直接固定定位占满视口 */
             position: fixed;
             top: 0;
             left: 0;
@@ -154,7 +152,6 @@
             width: 100dvw;
             height: 100vh;
             height: 100dvh;
-            /* 背景图片覆盖整个容器，不留白，根据比例自动裁剪 */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -163,8 +160,6 @@
             padding: 0;
             overflow: hidden;
             z-index: 10;
-            /* 让 .text-box 的定位相对于本容器生效 */
-            position: fixed;
         }
 
         .text-box {
@@ -173,7 +168,6 @@
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             position: absolute;
-            /* 文字框位于屏幕靠下位置，左右居中偏左 */
             top: 75%;
             left: 25%;
             transform: translate(-50%, -50%);
@@ -191,7 +185,6 @@
             font-weight: 500;
         }
 
-        /* 小屏 / 横屏适配 */
         @media (orientation: landscape) {
             .text-box {
                 top: 60%;
@@ -199,14 +192,12 @@
             }
         }
 
-        /* 确保所有交互元素在移动端友好 */
         .btn,
         .page,
         .text-box {
             touch-action: manipulation;
         }
 
-        /* 防止某些浏览器出现滚动条 */
         ::-webkit-scrollbar {
             display: none;
         }
@@ -218,31 +209,31 @@
         <source src="bgm.mp3" type="audio/mpeg" />
     </audio>
 
-    <!-- 第1页：欢迎 -->
+    <!-- Page 1: Welcome -->
     <div class="page active" id="page1">
-        <h1 class="text-animate">准备好惊喜了吗？🎁</h1>
-        <button class="btn text-animate" onclick="goToPage(2); playMusic();">Yes, 打开它！</button>
+        <h1 class="text-animate">Ready for a surprise? 🎁</h1>
+        <button class="btn text-animate" onclick="goToPage(2); playMusic();">Yes, Open It!</button>
     </div>
 
-    <!-- 第2页：打招呼 -->
+    <!-- Page 2: Greeting -->
     <div class="page" id="page2" onclick="goToPage(3)">
-        <h1 class="text-animate">嗨 <span>小熊</span></h1>
+        <h1 class="text-animate">Hi <span>Little Bear</span></h1>
     </div>
 
-    <!-- 第3页：俏皮话 -->
+    <!-- Page 3: Fun intro -->
     <div class="page" id="page3" onclick="goToPage(4)">
-        <h1 class="text-animate">我不太会说话，所以跳过客套，直奔主题吧！！:D</h1>
+        <h1 class="text-animate">I'm not much of a talker, so let's skip the clichés and just cut to the chase.!! :D</h1>
     </div>
 
-    <!-- 第4页：生日快乐 + 彩带动画 -->
+    <!-- Page 4: Happy Birthday + confetti -->
     <div class="page" id="page4" onclick="goToPage(5)">
-        <h1 class="text-animate">生日快乐 <span class="smiley">:)</span></h1>
+        <h1 class="text-animate">Happy Birthday <span class="smiley">:)</span></h1>
     </div>
 
-    <!-- 第5页：全屏图片 + 祝福语（点击可切换图片） -->
+    <!-- Page 5: Fullscreen images + blessing (click to switch) -->
     <div class="page" id="page5">
         <div class="text-box text-animate">
-            <p>愿你每天都快乐<br />好电影永远看不完</p>
+            <p>Wish you joy every day<br />and endless movies to watch</p>
         </div>
     </div>
 
@@ -251,7 +242,6 @@
         const totalPages = 5;
         const bgMusic = document.getElementById('bgMusic');
 
-        // 背景图片列表（请确保文件名与您项目中的一致）
         const bgImgList = [
             "1.jpg",
             "2.jpg",
@@ -259,12 +249,11 @@
         ];
         let imgIndex = 0;
 
-        // ----- 第4页的彩色泡泡动画 -----
+        // ----- Confetti animation for page 4 -----
         function createRandomCircle() {
             const page4 = document.getElementById('page4');
             const colors = ['#ff4081', '#4285F4', '#FFC107', '#4CAF50', '#9C27B0', '#FF5722', '#00BCD4', '#E91E63'];
             let interval = setInterval(() => {
-                // 只在第4页激活时生成
                 if (!document.getElementById('page4').classList.contains('active')) {
                     return;
                 }
@@ -279,96 +268,80 @@
                 page4.appendChild(circle);
                 setTimeout(() => circle.remove(), 2000);
             }, 300);
-            // 存储 interval 以便清理（但页面切换时自动停止）
             page4._circleInterval = interval;
         }
 
-        // ----- 页面切换核心 -----
+        // ----- Page navigation -----
         function goToPage(pageNum) {
             if (pageNum > totalPages) return;
 
-            // 隐藏所有页面，显示目标页面
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const target = document.getElementById(`page${pageNum}`);
             target.classList.add('active');
             currentPage = pageNum;
 
-            // 重新触发该页面的文字动画
             const animEls = target.querySelectorAll('.text-animate');
             animEls.forEach(el => {
                 el.style.animation = 'none';
-                // 强制回流后重新添加动画
                 void el.offsetHeight;
                 el.style.animation = '';
             });
 
-            // 第4页：启动彩带动画
             if (pageNum === 4) {
-                // 清除旧 interval 避免重复
                 if (document.getElementById('page4')._circleInterval) {
                     clearInterval(document.getElementById('page4')._circleInterval);
                 }
                 createRandomCircle();
             } else {
-                // 离开第4页时清理 interval
                 if (document.getElementById('page4')._circleInterval) {
                     clearInterval(document.getElementById('page4')._circleInterval);
                 }
             }
 
-            // 第5页：设置初始背景图片
             if (pageNum === 5) {
                 const p5 = document.getElementById('page5');
-                // 如果还没有背景图，设置第一张
                 if (!p5.style.backgroundImage || p5.style.backgroundImage === 'none') {
                     p5.style.backgroundImage = `url(${bgImgList[0]})`;
                 }
             }
         }
 
-        // ----- 第5页点击切换图片 -----
+        // ----- Click to switch images on page 5 -----
         document.getElementById('page5').addEventListener('click', function(e) {
-            // 如果点击的是文字框内部，不切换图片（让文字框可以选中/交互）
             if (e.target.closest('.text-box')) return;
             imgIndex = (imgIndex + 1) % bgImgList.length;
             this.style.backgroundImage = `url(${bgImgList[imgIndex]})`;
         });
 
-        // ----- 背景音乐播放（需用户交互触发） -----
+        // ----- Music playback -----
         function playMusic() {
             bgMusic.play().catch(e => {
-                // 大部分浏览器需要用户交互后才能播放，这里静默处理
-                console.log("音频播放需用户交互");
+                console.log("Audio play requires user interaction");
             });
         }
 
-        // 当用户点击页面任何地方时，尝试播放音乐（如果还没播放）
         document.addEventListener('click', function() {
             if (bgMusic.paused) {
                 bgMusic.play().catch(() => {});
             }
         }, { once: false });
 
-        // ----- 初始化：确保第5页在加载时已有背景图（但默认是隐藏的） -----
-        // 预加载第一张图片，避免切换时闪烁
+        // ----- Preload first image -----
         const preloadImg = new Image();
         preloadImg.src = bgImgList[0];
         preloadImg.onload = function() {
-            // 如果当前在第5页，设置背景
             if (document.getElementById('page5').classList.contains('active')) {
                 document.getElementById('page5').style.backgroundImage = `url(${bgImgList[0]})`;
             }
         };
 
-        // 额外：如果用户直接刷新到了第5页（不太可能，但以防万一）
-        // 页面加载完成后，如果第5页是激活状态，设置背景
         window.addEventListener('load', function() {
             if (document.getElementById('page5').classList.contains('active')) {
                 document.getElementById('page5').style.backgroundImage = `url(${bgImgList[0]})`;
             }
         });
 
-        console.log('🎂 生日快乐！希望你喜欢这份小惊喜~');
+        console.log('🎂 Happy Birthday! Hope you like this little surprise~');
     </script>
 
 </body>

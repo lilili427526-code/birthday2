@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>生日惊喜 🎁</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Marker Felt', '微软雅黑', sans-serif;
+        }
+
+        body {
+            background: #fff;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            /* fallback */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            padding: 20px;
+            text-align: center;
+            will-change: opacity;
+        }
+
+        .page.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .text-animate {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 1s ease forwards;
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .circle-dot {
+            position: absolute;
+            border-radius: 50%;
+            animation: circleScaleFade 2s ease-out forwards;
+        }
+
+        .smiley {
+            display: inline-block;
+            transform-origin: center center;
+            animation: fallDown 0.6s ease forwards;
+            color: #4B81AB;
+        }
+
+        @keyframes fallDown {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(90deg);
+            }
+        }
+
+        @keyframes circleScaleFade {
+            0% {
+                transform: scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(10);
+                opacity: 0;
+            }
+        }
+
+        #page1 h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 500;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            background: #ff4081;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
+            transition: transform 0.2s;
+            touch-action: manipulation;
+        }
+
+        #page2 h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 300;
+        }
+
+        #page2 h1 span {
+            color: #4285F4;
+        }
+
+        #page2 p {
+            margin-top: 10px;
+            color: #888;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-style: italic;
+        }
+
+        #page3 h1 {
+            font-size: clamp(1.2rem, 6vw, 2rem);
+            line-height: 1.4;
+            padding: 0 10px;
+        }
+
+        #page4 h1 {
+            font-size: clamp(3rem, 12vw, 6rem);
+            font-weight: bold;
+            letter-spacing: 6px;
+        }
+
+        /* ===== 关键修改：page5 全屏背景 ===== */
+        #page5 {
+            /* 不再依赖父级 .page 的尺寸，直接固定定位占满视口 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            width: 100dvw;
+            height: 100vh;
+            height: 100dvh;
+            /* 背景图片覆盖整个容器，不留白，根据比例自动裁剪 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.6s ease;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            z-index: 10;
+            /* 让 .text-box 的定位相对于本容器生效 */
+            position: fixed;
+        }
+
+        .text-box {
+            background: rgba(132, 149, 169, 0.92);
+            padding: 25px 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: absolute;
+            /* 文字框位于屏幕靠下位置，左右居中偏左 */
+            top: 75%;
+            left: 25%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            backdrop-filter: blur(4px);
+            touch-action: manipulation;
+        }
+
+        .text-box p {
+            color: #000000;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            line-height: 1.8;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* 小屏 / 横屏适配 */
+        @media (orientation: landscape) {
+            .text-box {
+                top: 60%;
+                width: 60%;
+            }
+        }
+
+        /* 确保所有交互元素在移动端友好 */
+        .btn,
+        .page,
+        .text-box {
+            touch-action: manipulation;
+        }
+
+        /* 防止某些浏览器出现滚动条 */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop preload="auto">
+        <source src="bgm.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- 第1页：欢迎 -->
+    <div class="page active" id="page1">
+        <h1 class="text-animate">准备好惊喜了吗？🎁</h1>
+        <button class="btn text-animate" onclick="goToPage(2); playMusic();">Yes, 打开它！</button>
+    </div>
+
+    <!-- 第2页：打招呼 -->
+    <div class="page" id="page2" onclick="goToPage(3)">
+        <h1 class="text-animate">嗨 <span>小熊</span></h1>
+    </div>
+
+    <!-- 第3页：俏皮话 -->
+    <div class="page" id="page3" onclick="goToPage(4)">
+        <h1 class="text-animate">我不太会说话，所以跳过客套，直奔主题吧！！:D</h1>
+    </div>
+
+    <!-- 第4页：生日快乐 + 彩带动画 -->
+    <div class="page" id="page4" onclick="goToPage(5)">
+        <h1 class="text-animate">生日快乐 <span class="smiley">:)</span></h1>
+    </div>
+
+    <!-- 第5页：全屏图片 + 祝福语（点击可切换图片） -->
+    <div class="page" id="page5">
+        <div class="text-box text-animate">
+            <p>愿你每天都快乐<br />好电影永远看不完</p>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 5;
+        const bgMusic = document.getElementById('bgMusic');
+
+        // 背景图片列表（请确保文件名与您项目中的一致）
+        const bgImgList = [
+            "1.jpg",
+            "2.jpg",
+            "3.jpg"
+        ];
+        let imgIndex = 0;
+
+        // ----- 第4页的彩色泡泡动画 -----
+        function createRandomCircle() {
+            const page4 = document.getElementById('page4');
+            const colors = ['#ff4081', '#4285F4', '#FFC107', '#4CAF50', '#9C27B0', '#FF5722', '#00BCD4', '#E91E63'];
+            let interval = setInterval(() => {
+                // 只在第4页激活时生成
+                if (!document.getElementById('page4').classList.contains('active')) {
+                    return;
+                }
+                const circle = document.createElement('div');
+                circle.className = 'circle-dot';
+                let size = Math.random() * 20 + 10;
+                circle.style.width = size + 'px';
+                circle.style.height = size + 'px';
+                circle.style.left = Math.random() * 100 + '%';
+                circle.style.top = Math.random() * 100 + '%';
+                circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                page4.appendChild(circle);
+                setTimeout(() => circle.remove(), 2000);
+            }, 300);
+            // 存储 interval 以便清理（但页面切换时自动停止）
+            page4._circleInterval = interval;
+        }
+
+        // ----- 页面切换核心 -----
+        function goToPage(pageNum) {
+            if (pageNum > totalPages) return;
+
+            // 隐藏所有页面，显示目标页面
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(`page${pageNum}`);
+            target.classList.add('active');
+            currentPage = pageNum;
+
+            // 重新触发该页面的文字动画
+            const animEls = target.querySelectorAll('.text-animate');
+            animEls.forEach(el => {
+                el.style.animation = 'none';
+                // 强制回流后重新添加动画
+                void el.offsetHeight;
+                el.style.animation = '';
+            });
+
+            // 第4页：启动彩带动画
+            if (pageNum === 4) {
+                // 清除旧 interval 避免重复
+                if (document.getElementById('page4')._circleInterval) {
+                    clearInterval(document.getElementById('page4')._circleInterval);
+                }
+                createRandomCircle();
+            } else {
+                // 离开第4页时清理 interval
+                if (document.getElementById('page4')._circleInterval) {
+                    clearInterval(document.getElementById('page4')._circleInterval);
+                }
+            }
+
+            // 第5页：设置初始背景图片
+            if (pageNum === 5) {
+                const p5 = document.getElementById('page5');
+                // 如果还没有背景图，设置第一张
+                if (!p5.style.backgroundImage || p5.style.backgroundImage === 'none') {
+                    p5.style.backgroundImage = `url(${bgImgList[0]})`;
+                }
+            }
+        }
+
+        // ----- 第5页点击切换图片 -----
+        document.getElementById('page5').addEventListener('click', function(e) {
+            // 如果点击的是文字框内部，不切换图片（让文字框可以选中/交互）
+            if (e.target.closest('.text-box')) return;
+            imgIndex = (imgIndex + 1) % bgImgList.length;
+            this.style.backgroundImage = `url(${bgImgList[imgIndex]})`;
+        });
+
+        // ----- 背景音乐播放（需用户交互触发） -----
+        function playMusic() {
+            bgMusic.play().catch(e => {
+                // 大部分浏览器需要用户交互后才能播放，这里静默处理
+                console.log("音频播放需用户交互");
+            });
+        }
+
+        // 当用户点击页面任何地方时，尝试播放音乐（如果还没播放）
+        document.addEventListener('click', function() {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(() => {});
+            }
+        }, { once: false });
+
+        // ----- 初始化：确保第5页在加载时已有背景图（但默认是隐藏的） -----
+        // 预加载第一张图片，避免切换时闪烁
+        const preloadImg = new Image();
+        preloadImg.src = bgImgList[0];
+        preloadImg.onload = function() {
+            // 如果当前在第5页，设置背景
+            if (document.getElementById('page5').classList.contains('active')) {
+                document.getElementById('page5').style.backgroundImage = `url(${bgImgList[0]})`;
+            }
+        };
+
+        // 额外：如果用户直接刷新到了第5页（不太可能，但以防万一）
+        // 页面加载完成后，如果第5页是激活状态，设置背景
+        window.addEventListener('load', function() {
+            if (document.getElementById('page5').classList.contains('active')) {
+                document.getElementById('page5').style.backgroundImage = `url(${bgImgList[0]})`;
+            }
+        });
+
+        console.log('🎂 生日快乐！希望你喜欢这份小惊喜~');
+    </script>
+
+</body>
+</html>

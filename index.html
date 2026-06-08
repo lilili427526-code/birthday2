@@ -1,350 +1,540 @@
 <!DOCTYPE html>
-<html lang = "en">
+<html lang="en">
 <head>
-<meta charset = "UTF-8" / >
-<meta name = "viewport" content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" / >
-<title>Birthday Surprise 🎁< / title>
-<style>
-*{
-    margin : 0;
-    padding : 0;
-    box - sizing: border - box;
-    font - family: 'Comic Sans MS', 'Marker Felt', '微软雅黑', sans - serif;
-}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Birthday Surprise 🎁</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Marker Felt', '微软雅黑', sans-serif;
+        }
 
-body{
-    background: #fff;
-    position: fixed;
-    width: 100 %;
-    height: 100 %;
-    display: flex;
-    justify - content: center;
-    align - items: center;
-    overflow: hidden;
-    cursor: pointer;
-    margin : 0;
-    padding : 0;
-}
+        body {
+            background: #fff;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+        }
 
-.page{
-    position: absolute;
-    top : 0;
-    left : 0;
-    width: 100 %;
-    height: 100vh;
-    height: 100dvh;
-    display: flex;
-    flex - direction: column;
-    justify - content: center;
-    align - items: center;
-    opacity : 0;
-    transition: opacity 0.8s ease;
-    pointer - events: none;
-    padding: 20px;
-    text - align: center;
-    will - change: opacity;
-}
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            padding: 20px;
+            text-align: center;
+            will-change: opacity;
+        }
 
-.page.active{
-    opacity : 1;
-    pointer - events: auto;
-}
+        .page.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-.text - animate{
-    opacity : 0;
-    transform: translateY(20px);
-    animation: fadeSlideUp 1s ease forwards;
-}
+        .text-animate {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 1s ease forwards;
+        }
 
-@keyframes fadeSlideUp{
-    to {
-        opacity : 1;
-        transform: translateY(0);
-    }
-}
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.circle - dot{
-    position: absolute;
-    border - radius: 50 %;
-    animation: circleScaleFade 2s ease - out forwards;
-}
+        .circle-dot {
+            position: absolute;
+            border-radius: 50%;
+            animation: circleScaleFade 2s ease-out forwards;
+        }
 
-.smiley{
-    display: inline - block;
-    transform - origin: center center;
-    animation: fallDown 0.6s ease forwards;
-    color: #4B81AB;
-}
+        .smiley {
+            display: inline-block;
+            transform-origin: center center;
+            animation: fallDown 0.6s ease forwards;
+            color: #4B81AB;
+        }
 
-@keyframes fallDown{
-    0 % {
-        transform: rotate(0deg);
-    }
-    100 % {
-        transform: rotate(90deg);
-    }
-}
+        @keyframes fallDown {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(90deg); }
+        }
 
-@keyframes circleScaleFade{
-    0 % {
-        transform: scale(0);
-        opacity: 0.8;
-    }
-    100 % {
-        transform: scale(10);
-        opacity : 0;
-    }
-}
+        @keyframes circleScaleFade {
+            0% { transform: scale(0); opacity: 0.8; }
+            100% { transform: scale(10); opacity: 0; }
+        }
 
-#page1 h1{
-    font - size: clamp(1.5rem, 5vw, 2.5rem);
-    font - weight: 500;
-    margin - bottom: 40px;
-}
+        #page1 h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 500;
+            margin-bottom: 40px;
+        }
 
-.btn{
-    padding: 15px 40px;
-    border: none;
-    border - radius: 30px;
-    background: #ff4081;
-    color: white;
-    font - size: 1.2rem;
-    cursor: pointer;
-    box - shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
-    transition: transform 0.2s;
-    touch - action: manipulation;
-}
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            background: #ff4081;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
+            transition: transform 0.2s;
+            touch-action: manipulation;
+        }
 
-#page2 h1{
-    font - size: clamp(2.5rem, 8vw, 4rem);
-    font - weight: 300;
-}
+        #page2 h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 300;
+        }
 
-#page2 h1 span{
-    color: #4285F4;
-}
+        #page2 h1 span {
+            color: #4285F4;
+        }
 
-#page2 p{
-    margin - top: 10px;
-    color: #888;
-    font - size: clamp(1rem, 3vw, 1.2rem);
-    font - style: italic;
-}
+        #page2 p {
+            margin-top: 10px;
+            color: #888;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-style: italic;
+        }
 
-#page3 h1{
-    font - size: clamp(1.2rem, 6vw, 2rem);
-    line - height: 1.4;
-    padding: 0 10px;
-}
+        #page3 h1 {
+            font-size: clamp(1.2rem, 6vw, 2rem);
+            line-height: 1.4;
+            padding: 0 10px;
+        }
 
-#page4 h1{
-    font - size: clamp(3rem, 12vw, 6rem);
-    font - weight: bold;
-    letter - spacing: 6px;
-}
+        #page4 h1 {
+            font-size: clamp(3rem, 12vw, 6rem);
+            font-weight: bold;
+            letter-spacing: 6px;
+        }
 
-/* ===== 全屏背景 ===== */
-#page5{
-    position: fixed;
-    top : 0;
-    left : 0;
-    width: 100vw;
-    width: 100dvw;
-    height: 100vh;
-    height: 100dvh;
-    background - size: cover;
-    background - position: center;
-    background - repeat: no - repeat;
-    transition: background - image 0.6s ease;
-    margin : 0;
-    padding : 0;
-    overflow: hidden;
-    z - index: 10;
-}
+        /* ===== 第五页全屏背景（样式100%保持原样） ===== */
+        #page5 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            width: 100dvw;
+            height: 100vh;
+            height: 100dvh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.6s ease;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            z-index: 10;
+        }
 
-.text - box{
-    background: rgba(132, 149, 169, 0.92);
-    padding: 25px 40px;
-    border - radius: 16px;
-    box - shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    position: absolute;
-    top: 75 %;
-    left: 25 %;
-    transform: translate(-50 %, -50 %);
-    width: 80 %;
-    max - width: 600px;
-    backdrop - filter: blur(4px);
-    touch - action: manipulation;
-}
+        .text-box {
+            background: rgba(132, 149, 169, 0.92);
+            padding: 25px 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: absolute;
+            top: 75%;
+            left: 25%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            backdrop-filter: blur(4px);
+            touch-action: manipulation;
+        }
 
-.text - box p{
-    color: #000000;
-    font - size: clamp(1.2rem, 4vw, 2rem);
-    line - height: 1.8;
-    margin : 0;
-    font - weight: 500;
-}
+        .text-box p {
+            color: #000000;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            line-height: 1.8;
+            margin: 0;
+            font-weight: 500;
+        }
 
-@media(orientation: landscape) {
-    .text - box{
-        top: 60 %;
-        width: 60 %;
-    }
-}
+        @media (orientation: landscape) {
+            .text-box {
+                top: 60%;
+                width: 60%;
+            }
+        }
 
-.btn,
-.page,
-.text - box{
-    touch - action: manipulation;
-}
+        /* ===== Page 6: 德式菜单独立样式 ===== */
+        #page6 {
+            background: #fdfbf7; 
+            color: #333;
+            z-index: 20;
+            padding: 40px 20px;
+            overflow-y: auto; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
 
-:: - webkit - scrollbar{
-    display: none;
-}
-< / style>
-< / head>
+        .menu-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e0dcd5;
+            width: 100%;
+            max-width: 500px;
+            padding-bottom: 15px;
+        }
+
+        .menu-header .brand {
+            font-family: 'Times New Roman', Georgia, serif;
+            font-size: 2.2rem;
+            font-style: italic;
+            color: #bc9b6a;
+            letter-spacing: 2px;
+        }
+
+        .menu-header .title {
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            margin-top: 5px;
+            color: #444;
+        }
+
+        .menu-header .subtitle {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .menu-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .menu-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 5px 10px;
+        }
+
+        .menu-item:hover { transform: scale(1.02); }
+
+        .course-title {
+            font-family: 'Times New Roman', Georgia, serif;
+            color: #8a2b2b;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .dish-foreign {
+            font-style: italic;
+            font-size: 1rem;
+            color: #333;
+            font-family: Georgia, serif;
+            margin-bottom: 2px;
+        }
+
+        .dish-zh {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        .allergen-info {
+            font-size: 0.75rem;
+            color: #999;
+            font-style: italic;
+        }
+
+        .menu-footer {
+            margin-top: 40px;
+            font-style: italic;
+            font-family: Georgia, serif;
+            font-size: 0.85rem;
+            color: #777;
+            text-align: right;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* ===== 全屏视频播放覆盖层 ===== */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-overlay video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn, .page, .text-box {
+            touch-action: manipulation;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
 <body>
 
-<audio id = "bgMusic" loop preload = "auto">
-<source src = "bgm.mp3" type = "audio/mpeg" / >
-< / audio>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="bgm.mp3" type="audio/mpeg" />
+    </audio>
 
-<!--Page 1: Welcome-->
-<div class = "page active" id = "page1">
-<h1 class = "text-animate">Ready for a surprise ? 🎁< / h1>
-<button class = "btn text-animate" onclick = "goToPage(2); playMusic();">Yes, Open It!< / button>
-< / div>
+    <div class="page active" id="page1">
+        <h1 class="text-animate">Ready for a surprise? 🎁</h1>
+        <button class="btn text-animate" onclick="goToPage(2); playMusic();">Yes, Open It!</button>
+    </div>
 
-<!--Page 2 : Greeting-->
-<div class = "page" id = "page2" onclick = "goToPage(3)">
-<h1 class = "text-animate">Hi <span>小熊< / span>< / h1>
-< / div>
+    <div class="page" id="page2" onclick="goToPage(3)">
+        <h1 class="text-animate">Hi <span>小熊</span></h1>
+    </div>
 
-<!--Page 3: Fun intro-->
-<div class = "page" id = "page3" onclick = "goToPage(4)">
-<h1 class = "text-animate">I'm not much of a talker, so let's skip the clichés and just cut to the chase.!!:D< / h1>
-< / div>
+    <div class="page" id="page3" onclick="goToPage(4)">
+        <h1 class="text-animate">I'm not much of a talker, so let's skip the clichés and just cut to the chase.!! :D</h1>
+    </div>
 
-<!--Page 4 : Happy Birthday + confetti-->
-<div class = "page" id = "page4" onclick = "goToPage(5)">
-<h1 class = "text-animate">Happy Birthday <span class = "smiley"> : ) < / span > < / h1>
-< / div>
+    <div class="page" id="page4" onclick="goToPage(5)">
+        <h1 class="text-animate">Happy Birthday <span class="smiley">:)</span></h1>
+    </div>
 
-<!--Page 5: Fullscreen images + blessing(click to switch) -->
-<div class = "page" id = "page5">
-<div class = "text-box text-animate">
-<p>Wish you joy every day<br / > and endless movies to watch< / p>
-< / div>
-< / div>
+    <div class="page" id="page5">
+        <div class="text-box text-animate">
+            <p>Wish you joy every day<br />and endless movies to watch</p>
+        </div>
+    </div>
 
-<script>
-let currentPage = 1;
-const totalPages = 5;
-const bgMusic = document.getElementById('bgMusic');
+    <div class="page" id="page6">
+        <div class="menu-header">
+            <div class="brand">La Osteria</div>
+            <div class="title">MENU</div>
+            <div class="subtitle">Creazione dello Chef / 主厨推荐</div>
+        </div>
 
-const bgImgList = [
-    "1.jpg",
-    "2.jpg",
-    "3.jpg"
-];
-let imgIndex = 0;
+        <div class="menu-container">
+            <div class="menu-item" onclick="playMenuVideo('video1.mp4')">
+                <div class="course-title">Vorspeise</div>
+                <div class="dish-foreign">Geräucherter Winterpilz</div>
+                <div class="dish-zh">烟熏冬菇</div>
+                <div class="allergen-info">Enthält: pilze, rauch / 过敏原：冬菇、烟熏风味</div>
+            </div>
 
-// ----- Confetti animation for page 4 -----
-function createRandomCircle() {
-    const page4 = document.getElementById('page4');
-    const colors = ['#ff4081', '#4285F4', '#FFC107', '#4CAF50', '#9C27B0', '#FF5722', '#00BCD4', '#E91E63'];
-    let interval = setInterval(() = > {
-        if (!document.getElementById('page4').classList.contains('active')) {
-            return;
+            <div class="menu-item" onclick="playMenuVideo('video2.mp4')">
+                <div class="course-title">Erster Gang</div>
+                <div class="dish-foreign">Winterpilz-Sashimi mit Champagner</div>
+                <div class="dish-zh">冬菇刺身搭配香槟</div>
+                <div class="allergen-info">Enthält: alkohol, frische pilze / 过敏原：微量酒精、鲜菇</div>
+            </div>
+
+            <div class="menu-item" onclick="playMenuVideo('video3.mp4')">
+                <div class="course-title">Hauptgang</div>
+                <div class="dish-foreign">Flambierter Winterpilz mit Meersalz</div>
+                <div class="dish-zh">火炙冬菇佐海盐</div>
+                <div class="allergen-info">Enthält: meersalz / 过敏原：天然海盐</div>
+            </div>
+
+            <div class="menu-item" onclick="playMenuVideo('video4.mp4')">
+                <div class="course-title">Dessert</div>
+                <div class="dish-foreign">Schneefeld-Winterpilz mit Puderzucker</div>
+                <div class="dish-zh">雪原冬菇搭配雪粉糖霜</div>
+                <div class="allergen-info">Enthält: zucker / 过敏原：糖制品</div>
+            </div>
+        </div>
+
+        <div class="menu-footer">
+            "Das heutige Menü, mit Liebe gemacht."<br>
+            — Chef Marco
+        </div>
+    </div>
+
+    <div class="video-overlay" id="videoOverlay">
+        <video id="menuVideo" playsinline></video>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 6; 
+        const bgMusic = document.getElementById('bgMusic');
+        const videoOverlay = document.getElementById('videoOverlay');
+        const menuVideo = document.getElementById('menuVideo');
+
+        const bgImgList = [
+            "1.jpg",
+            "2.jpg",
+            "3.jpg"
+        ];
+        let imgIndex = 0;
+
+        // ----- Confetti animation for page 4 -----
+        function createRandomCircle() {
+            const page4 = document.getElementById('page4');
+            const colors = ['#ff4081', '#4285F4', '#FFC107', '#4CAF50', '#9C27B0', '#FF5722', '#00BCD4', '#E91E63'];
+            let interval = setInterval(() => {
+                if (!document.getElementById('page4').classList.contains('active')) {
+                    return;
+                }
+                const circle = document.createElement('div');
+                circle.className = 'circle-dot';
+                let size = Math.random() * 20 + 10;
+                circle.style.width = size + 'px';
+                circle.style.height = size + 'px';
+                circle.style.left = Math.random() * 100 + '%';
+                circle.style.top = Math.random() * 100 + '%';
+                circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                page4.appendChild(circle);
+                setTimeout(() => circle.remove(), 2000);
+            }, 300);
+            page4._circleInterval = interval;
         }
-        const circle = document.createElement('div');
-        circle.className = 'circle-dot';
-        let size = Math.random() * 20 + 10;
-        circle.style.width = size + 'px';
-        circle.style.height = size + 'px';
-        circle.style.left = Math.random() * 100 + '%';
-        circle.style.top = Math.random() * 100 + '%';
-        circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        page4.appendChild(circle);
-        setTimeout(() = > circle.remove(), 2000);
-    }, 300);
-    page4._circleInterval = interval;
-}
 
-// ----- Page navigation -----
-function goToPage(pageNum) {
-    if (pageNum > totalPages) return;
+        // ----- Page navigation -----
+        function goToPage(pageNum) {
+            if (pageNum > totalPages) return;
 
-    document.querySelectorAll('.page').forEach(p = > p.classList.remove('active'));
-    const target = document.getElementById(`page${pageNum
-}`);
-target.classList.add('active');
-currentPage = pageNum;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(`page${pageNum}`);
+            target.classList.add('active');
+            currentPage = pageNum;
 
-const animEls = target.querySelectorAll('.text-animate');
-animEls.forEach(el = > {
-    el.style.animation = 'none';
-    void el.offsetHeight;
-    el.style.animation = '';
-});
+            const animEls = target.querySelectorAll('.text-animate');
+            animEls.forEach(el => {
+                el.style.animation = 'none';
+                void el.offsetHeight;
+                el.style.animation = '';
+            });
 
-if (pageNum == = 4) {
-    if (document.getElementById('page4')._circleInterval) {
-        clearInterval(document.getElementById('page4')._circleInterval);
-    }
-    createRandomCircle();
-}
-else {
-    if (document.getElementById('page4')._circleInterval) {
-        clearInterval(document.getElementById('page4')._circleInterval);
-    }
-}
+            if (pageNum === 4) {
+                if (document.getElementById('page4')._circleInterval) {
+                    clearInterval(document.getElementById('page4')._circleInterval);
+                }
+                createRandomCircle();
+            } else {
+                if (document.getElementById('page4')._circleInterval) {
+                    clearInterval(document.getElementById('page4')._circleInterval);
+                }
+            }
 
-if (pageNum == = 5) {
-    const p5 = document.getElementById('page5');
-    if (!p5.style.backgroundImage || p5.style.backgroundImage == = 'none') {
-        p5.style.backgroundImage = `url(${ bgImgList[0] })`;
-    }
-}
+            if (pageNum === 5) {
+                const p5 = document.getElementById('page5');
+                if (!p5.style.backgroundImage || p5.style.backgroundImage === 'none') {
+                    p5.style.backgroundImage = `url(${bgImgList[0]})`;
+                }
+            }
         }
 
-        // ----- Click to switch images on page 5 -----
-        document.getElementById('page5').addEventListener('click', function(e) {
+        // ----- 菜单视频播放与 BGM 联动逻辑 -----
+        function playMenuVideo(videoSrc) {
+            bgMusic.pause(); 
+
+            menuVideo.src = videoSrc;
+            videoOverlay.style.display = 'flex';
+            menuVideo.play().catch(err => {
+                console.log("Video playback waiting for interaction: ", err);
+            });
+
+            menuVideo.onended = function() {
+                videoOverlay.style.display = 'none';
+                menuVideo.src = ""; 
+                bgMusic.play().catch(() => {}); 
+            };
+        }
+
+        // ----- 鼠标左键点击（或手机端轻触）：切换第五页背景图 -----
+        document.getElementById('page5').addEventListener('click', function (e) {
             if (e.target.closest('.text-box')) return;
             imgIndex = (imgIndex + 1) % bgImgList.length;
-            this.style.backgroundImage = `url(${ bgImgList[imgIndex] })`;
+            this.style.backgroundImage = `url(${bgImgList[imgIndex]})`;
         });
+
+        // ===== 电脑端鼠标右键响应逻辑：相当于手机端滑动，直接切到第六页 =====
+        document.getElementById('page5').addEventListener('contextmenu', function (e) {
+            if (currentPage === 5) {
+                e.preventDefault(); // 核心：阻止系统自带的右键菜单弹出
+                goToPage(6);       // 直接切到第六页菜单
+            }
+        });
+
+        // ===== 手机端向左滑屏识别逻辑（保持纯后台运行，不修改样式） =====
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const page5Element = document.getElementById('page5');
+
+        page5Element.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].clientX;
+        }, { passive: true });
+
+        page5Element.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].clientX;
+            if (currentPage === 5 && (touchStartX - touchEndX > 60)) {
+                goToPage(6);
+            }
+        }, { passive: true });
 
         // ----- Music playback -----
         function playMusic() {
-            bgMusic.play().catch (e = > {
+            bgMusic.play().catch(e => {
                 console.log("Audio play requires user interaction");
             });
         }
 
-        document.addEventListener('click', function() {
-            if (bgMusic.paused) {
-                bgMusic.play().catch (() = > {});
+        document.addEventListener('click', function () {
+            if (bgMusic.paused && videoOverlay.style.display !== 'flex') {
+                bgMusic.play().catch(() => { });
             }
         }, { once: false });
 
         // ----- Preload first image -----
         const preloadImg = new Image();
         preloadImg.src = bgImgList[0];
-        preloadImg.onload = function() {
+        preloadImg.onload = function () {
             if (document.getElementById('page5').classList.contains('active')) {
-                document.getElementById('page5').style.backgroundImage = `url(${ bgImgList[0] })`;
+                document.getElementById('page5').style.backgroundImage = `url(${bgImgList[0]})`;
             }
         };
 
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             if (document.getElementById('page5').classList.contains('active')) {
-                document.getElementById('page5').style.backgroundImage = `url(${ bgImgList[0] })`;
+                document.getElementById('page5').style.backgroundImage = `url(${bgImgList[0]})`;
             }
         });
 
         console.log('🎂 Happy Birthday! Hope you like this little surprise~');
-        < / script>
-
-            < / body>
-            < / html>
+    </script>
+</body>
+</html>
